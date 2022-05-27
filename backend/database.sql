@@ -1,63 +1,305 @@
--- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
--- http://www.phpmyadmin.net
---
--- Client :  localhost
--- Généré le :  Jeu 26 Octobre 2017 à 13:53
--- Version du serveur :  5.7.19-0ubuntu0.16.04.1
--- Version de PHP :  7.0.22-0ubuntu0.16.04.1
+CREATE TABLE `user` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `firstname` varchar(255),
+  `lastname` varchar(255),
+  `country_code` VARCHAR(5),
+  `created_at` datetime
+);
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+CREATE TABLE `country` (
+  `code` varchar(5) PRIMARY KEY,
+  `name` varchar(255)
+);
+
+CREATE TABLE `book` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `title` varchar(255),
+  `author` varchar(255),
+  `publication_year` int
+);
+
+CREATE TABLE `book_user` (
+  `book_id` int,
+  `user_id` int,
+  `read_at` datetime
+);
+
+ALTER TABLE `user` ADD FOREIGN KEY (`country_code`) REFERENCES `country` (`code`);
+
+ALTER TABLE `book_user` ADD FOREIGN KEY (`book_id`) REFERENCES `book` (`id`);
+
+ALTER TABLE `book_user` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+INSERT INTO book (title, author, publication_year) 
+VALUES 
+("Harry Potter à l'école des sorciers","J.K. Rowling",1997),
+("Voyage au bout de la nuit","Louis-Ferdinand Céline",1932),
+("À la recherche du temps perdu","Marcel Proust",1927),
+("Cent ans de solitude","Gabriel García Márquez",1967),
+("1984","George Orwell",1949),
+("L'étranger","Albert Camus",1942),
+("Belle du seigneur","Albert Cohen",1968),
+("Les misérables","Victor Hugo",1862),
+("La promesse de l'aube","Romain Gary",1960),
+("Le comte de Monte-Cristo","Alexandre Dumas",1844),
+("Mémoires d'Hadrien","Marguerite Yourcenar",1951),
+("Orgueil et préjugés","Jane Austin",1813),
+("L'insoutenable légèreté de l'être","Milan Kundera",1984),
+("Crime et châtiment","Fiodor Dostoïevski",1867),
+("Madame Bovary","Gustave Flaubert",1857),
+("L'écume des jours","Boris Vian",1947),
+("Le petit prince","Antoine de Saint-Exupéry",1943),
+("Le rouge et le noir","Stendhal",1830),
+("Les frères Karamazov","Fiodor Dostoïevski",1880);
 
---
--- Base de données :  `simple-mvc`
---
 
--- --------------------------------------------------------
-
---
--- Structure de la table `item`
---
-
-CREATE TABLE `item` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `title` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Contenu de la table `item`
---
-
-INSERT INTO `item` (`id`, `title`) VALUES
-(1, 'Stuff'),
-(2, 'Doodads');
-
---
--- Index pour les tables exportées
---
-
---
--- Index pour la table `item`
---
-ALTER TABLE `item`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT pour les tables exportées
---
-
---
--- AUTO_INCREMENT pour la table `item`
---
-ALTER TABLE `item`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+INSERT INTO country (name, code) 
+VALUES 
+("Afghanistan","af"),
+("Îles Åland","ax"),
+("Albanie","al"),
+("Algérie","dz"),
+("Samoa américaines","as"),
+("Andorre","ad"),
+("Angola","ao"),
+("Anguilla","ai"),
+("Antarctique","aq"),
+("Antigua-et-Barbuda","ag"),
+("Argentine","ar"),
+("Arménie","am"),
+("Aruba","aw"),
+("Australie","au"),
+("Autriche","at"),
+("Azerbaïdjan","az"),
+("Bahamas","bs"),
+("Bahreïn","bh"),
+("Bangladesh","bd"),
+("Barbade","bb"),
+("Biélorussie","by"),
+("Belgique","be"),
+("Belize","bz"),
+("Bénin","bj"),
+("Bermudes","bm"),
+("Bhoutan","bt"),
+("Bolivie","bo"),
+("Bosnie-Herzégovine","ba"),
+("Botswana","bw"),
+("Île Bouvet","bv"),
+("Brésil","br"),
+("British Virgin Islands","vg"),
+("Territoire britannique de l’Océan Indien","io"),
+("Brunei Darussalam","bn"),
+("Bulgarie","bg"),
+("Burkina Faso","bf"),
+("Burundi","bi"),
+("Cambodge","kh"),
+("Cameroun","cm"),
+("Canada","ca"),
+("Cap-Vert","cv"),
+("Iles Cayman","ky"),
+("République centrafricaine","cf"),
+("Tchad","td"),
+("Chili","cl"),
+("Chine","cn"),
+("Hong Kong","hk"),
+("Macao","mo"),
+("Île Christmas","cx"),
+("Îles Cocos","cc"),
+("Colombie","co"),
+("Comores","km"),
+("République du Congo","cg"),
+("République démocratique du Congo","cd"),
+("Îles Cook","ck"),
+("Costa Rica","cr"),
+("Côte d’Ivoire","ci"),
+("Croatie","hr"),
+("Cuba","cu"),
+("Chypre","cy"),
+("République tchèque","cz"),
+("Danemark","dk"),
+("Djibouti","dj"),
+("Dominique","dm"),
+("République dominicaine","do"),
+("Équateur","ec"),
+("Égypte","eg"),
+("Salvador","sv"),
+("Guinée équatoriale","gq"),
+("Érythrée","er"),
+("Estonie","ee"),
+("Éthiopie","et"),
+("Îles Falkland","fk"),
+("Îles Féroé","fo"),
+("Fidji","fj"),
+("Finlande","fi"),
+("France","fr"),
+("Guyane française","gf"),
+("Polynésie française","pf"),
+("Terres australes et antarctiques françaises","tf"),
+("Gabon","ga"),
+("Gambie","gm"),
+("Géorgie","ge"),
+("Allemagne","de"),
+("Ghana","gh"),
+("Gibraltar","gi"),
+("Grèce","gr"),
+("Groenland","gl"),
+("Grenade","gd"),
+("Guadeloupe","gp"),
+("Guam","gu"),
+("Guatemala","gt"),
+("Guernesey","gg"),
+("Guinée","gn"),
+("Guinée-Bissau","gw"),
+("Guyane","gy"),
+("Haïti","ht"),
+("Îles Heard-et-MacDonald","hm"),
+("Saint-Siège (Vatican)","va"),
+("Honduras","hn"),
+("Hongrie","hu"),
+("Islande","is"),
+("Inde","in"),
+("Indonésie","id"),
+("Iran","ir"),
+("Irak","iq"),
+("Irlande","ie"),
+("Ile de Man","im"),
+("Israël","il"),
+("Italie","it"),
+("Jamaïque","jm"),
+("Japon","jp"),
+("Jersey","je"),
+("Jordanie","jo"),
+("Kazakhstan","kz"),
+("Kenya","ke"),
+("Kiribati","ki"),
+("Corée du Nord","kp"),
+("Corée du Sud","kr"),
+("Koweït","kw"),
+("Kirghizistan","kg"),
+("Laos","la"),
+("Lettonie","lv"),
+("Liban","lb"),
+("Lesotho","ls"),
+("Libéria","lr"),
+("Libye","ly"),
+("Liechtenstein","li"),
+("Lituanie","lt"),
+("Luxembourg","lu"),
+("Macédoine","mk"),
+("Madagascar","mg"),
+("Malawi","mw"),
+("Malaisie","my"),
+("Maldives","mv"),
+("Mali","ml"),
+("Malte","mt"),
+("Îles Marshall","mh"),
+("Martinique","mq"),
+("Mauritanie","mr"),
+("Maurice","mu"),
+("Mayotte","yt"),
+("Mexique","mx"),
+("Micronésie","fm"),
+("Moldavie","md"),
+("Monaco","mc"),
+("Mongolie","mn"),
+("Monténégro","me"),
+("Montserrat","ms"),
+("Maroc","ma"),
+("Mozambique","mz"),
+("Myanmar","mm"),
+("Namibie","na"),
+("Nauru","nr"),
+("Népal","np"),
+("Pays-Bas","nl"),
+("Nouvelle-Calédonie","nc"),
+("Nouvelle-Zélande","nz"),
+("Nicaragua","ni"),
+("Niger","ne"),
+("Nigeria","ng"),
+("Niue","nu"),
+("Île Norfolk","nf"),
+("Îles Mariannes du Nord","mp"),
+("Norvège","no"),
+("Oman","om"),
+("Pakistan","pk"),
+("Palau","pw"),
+("Palestine","ps"),
+("Panama","pa"),
+("Papouasie-Nouvelle-Guinée","pg"),
+("Paraguay","py"),
+("Pérou","pe"),
+("Philippines","ph"),
+("Pitcairn","pn"),
+("Pologne","pl"),
+("Portugal","pt"),
+("Puerto Rico","pr"),
+("Qatar","qa"),
+("Réunion","re"),
+("Roumanie","ro"),
+("Russie","ru"),
+("Rwanda","rw"),
+("Saint-Barthélemy","bl"),
+("Sainte-Hélène","sh"),
+("Saint-Kitts-et-Nevis","kn"),
+("Sainte-Lucie","lc"),
+("Saint-Martin (partie française)","mf"),
+("Saint-Martin (partie néerlandaise)","sx"),
+("Saint-Pierre-et-Miquelon","pm"),
+("Saint-Vincent-et-les Grenadines","vc"),
+("Samoa","ws"),
+("Saint-Marin","sm"),
+("Sao Tomé-et-Principe","st"),
+("Arabie Saoudite","sa"),
+("Sénégal","sn"),
+("Serbie","rs"),
+("Seychelles","sc"),
+("Sierra Leone","sl"),
+("Singapour","sg"),
+("Slovaquie","sk"),
+("Slovénie","si"),
+("Îles Salomon","sb"),
+("Somalie","so"),
+("Afrique du Sud","za"),
+("Géorgie du Sud et les îles Sandwich du Sud","gs"),
+("Sud-Soudan","ss"),
+("Espagne","es"),
+("Sri Lanka","lk"),
+("Soudan","sd"),
+("Suriname","sr"),
+("Svalbard et Jan Mayen","sj"),
+("Eswatini","sz"),
+("Suède","se"),
+("Suisse","ch"),
+("Syrie","sy"),
+("Taiwan","tw"),
+("Tadjikistan","tj"),
+("Tanzanie","tz"),
+("Thaïlande","th"),
+("Timor-Leste","tl"),
+("Togo","tg"),
+("Tokelau","tk"),
+("Tonga","to"),
+("Trinité-et-Tobago","tt"),
+("Tunisie","tn"),
+("Turquie","tr"),
+("Turkménistan","tm"),
+("Îles Turques-et-Caïques","tc"),
+("Tuvalu","tv"),
+("Ouganda","ug"),
+("Ukraine","ua"),
+("Émirats Arabes Unis","ae"),
+("Royaume-Uni","gb"),
+("États-Unis","us"),
+("Îles mineures éloignées des États-Unis","um"),
+("Uruguay","uy"),
+("Ouzbékistan","uz"),
+("Vanuatu","vu"),
+("Venezuela","ve"),
+("Viêt Nam","vn"),
+("Îles Vierges américaines","vi"),
+("Wallis-et-Futuna","wf"),
+("Sahara occidental","eh"),
+("Yémen","ye"),
+("Zambie","zm"),
+("Zimbabwe","zw");
