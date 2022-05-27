@@ -44,14 +44,14 @@ class AuthController {
       });
   };
 
-  static login = async (req, res) => {
-    const { email, password } = req.body;
+  static login = async (req) => {
+    const { email } = req.body;
 
-    const [user] = await models.user.find({ email });
-    console.warn(user);
+    const user = await models.user.find({ email });
+    console.warn(user[0]);
 
-    const isValid = await this.verifyPassword(password, user.password);
-    return isValid ? this.success(res, user) : this.error(res);
+    // const isValid = await this.verifyPassword(password, user.password);
+    // return isValid ? this.success(res, user) : this.error(res);
   };
 }
 

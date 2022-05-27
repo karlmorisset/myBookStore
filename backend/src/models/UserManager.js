@@ -3,10 +3,10 @@ const AbstractManager = require("./AbstractManager");
 class UserManager extends AbstractManager {
   static table = "user";
 
-  find(email) {
+  find(user) {
     return this.connection.query(
       `select * from  ${this.table} where email = ?`,
-      [email]
+      [user.email]
     );
   }
 
